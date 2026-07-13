@@ -23,9 +23,9 @@ const NAV_LINKS: NavLink[] = [
 function Logo() {
   return (
     <Link href="/" className="flex shrink-0 items-center">
-      <div className="relative h-12 w-52 sm:h-14 sm:w-60">
+      <div className="relative h-12 w-52 sm:h-22 sm:w-68">
         <Image
-          src="/images/logo/logo2.jpeg"
+          src="/images/logo/logo3.png"
           alt="ITS Agency"
           fill
           className="object-contain object-left"
@@ -100,7 +100,7 @@ export default function Navbar() {
               +229 01 56 02 69 67
             </a>
             <Link
-              href="/#contact"
+              href="/contact"
               className="group inline-flex items-center gap-1.5 rounded-full bg-[#1F7A4D] px-5 py-2.5 text-[13px] font-semibold text-white transition-all duration-300 hover:bg-[#175c3b] hover:shadow-[0_8px_24px_rgba(31,122,77,0.35)]"
             >
               Parlons de votre projet
@@ -181,7 +181,7 @@ export default function Navbar() {
                   +229 01 56 02 69 67
                 </a>
                 <Link
-                  href="/#contact"
+                  href="/contact"
                   onClick={() => setMobileOpen(false)}
                   className="flex w-full items-center justify-center gap-1.5 rounded-full bg-[#1F7A4D] py-3 text-[14px] font-semibold text-white"
                 >

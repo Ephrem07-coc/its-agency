@@ -99,14 +99,6 @@ export default function Services() {
                 <p className="mb-6 flex-1 text-[13.5px] leading-relaxed text-[#4B5A6E]">
                   {service.description}
                 </p>
-
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 self-start text-[13.5px] font-semibold text-[#1F7A4D] transition-colors duration-200 hover:text-[#0B1F3A]"
-                >
-                  En savoir plus
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
               </motion.div>
             );
           })}

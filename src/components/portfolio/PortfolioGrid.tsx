@@ -95,7 +95,7 @@ const STEPS: MethodStep[] = [
     id: "cyber-rms",
     icon: ShieldCheck,
     phaseNumber: 5,
-    title: "Sécurisation RMS",
+    title: "Sécurisation & Conformité",
     category: "Déploiement",
     tagline: "Protéger ce qui compte",
     description:
@@ -276,7 +276,7 @@ export default function PortfolioGrid({ isStandalone = false }: PortfolioGridPro
             et pensée pour durer.
           </p>
           <p className="mt-3 text-[12.5px] uppercase tracking-[0.15em] text-[#1F7A4D]">
-            ITS Agency  Votre partenaire digital international.
+            Votre conseiller qui vous facilite une communication et un commerce sécurisé.
           </p>
         </div>
       </div>

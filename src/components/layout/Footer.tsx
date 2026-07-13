@@ -169,14 +169,6 @@ export default function Footer() {
           <p className="text-[12.5px] text-white/40">
             © 2026 ITS Agency. Tous droits réservés.
           </p>
-          <div className="flex gap-6 text-[12.5px] text-white/40">
-            <Link href="/mentions-legales" className="hover:text-white/70">
-              Mentions légales
-            </Link>
-            <Link href="/confidentialite" className="hover:text-white/70">
-              Confidentialité
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

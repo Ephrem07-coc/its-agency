@@ -14,7 +14,6 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Stats />
       <PortfolioGrid />
       <WhyChooseUs />
       <ContactInfo />

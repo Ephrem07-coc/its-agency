@@ -22,7 +22,7 @@ const VALUES = [
     icon: Layers,
     title: "Excellence pluridisciplinaire",
     description:
-      "Fusionner nos 4 expertises pour offer une valeur qu'un cabinet classique ne peut proposer seul.",
+      "Fusionner nos 4 expertises pour offrir une valeur qu'un cabinet classique ne peut proposer seul.",
   },
 ];
 
@@ -46,7 +46,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="À propos de nous"
         title="Le cabinet qui conseille et qui construit."
-        description="ITS Agency est née d'un constat simple : les PME locales ont besoin d'un seul interlocuteur pour penser leur stratégie export et la mettre en ligne, en toute sécurité."
+        description="ITS Agency est née d'un constat simple : les PME locales ont besoin d'un interlocuteur pour optimiser leur stratégie export et la mettre en ligne, en toute sécurité."
       />
 
       {/* Mission / Vision */}

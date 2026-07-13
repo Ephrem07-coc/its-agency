@@ -102,7 +102,7 @@ ${formData.get("message")}
                   htmlFor="nom"
                   className="mb-2 block text-[12.5px] font-medium text-[#0B1F3A]/70"
                 >
-                  Nom
+                  Nom et Prénom
                 </label>
                 <input
                   id="nom"
@@ -159,22 +159,6 @@ ${formData.get("message")}
                   name="telephone"
                   type="tel"
                   placeholder="+229 XX XX XX XX"
-                  className={inputClass}
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="sujet"
-                  className="mb-2 block text-[12.5px] font-medium text-[#0B1F3A]/70"
-                >
-                  Sujet
-                </label>
-                <input
-                  id="sujet"
-                  name="sujet"
-                  type="text"
-                  placeholder="Objet de votre message"
                   className={inputClass}
                 />
               </div>

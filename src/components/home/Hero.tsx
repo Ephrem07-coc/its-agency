@@ -81,7 +81,7 @@ export default function Hero() {
             className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
           >
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#4CC382]">
-              Sécurité &amp; Transformation Numérique
+              Sécurité &amp; Transformation Digitale
             </span>
           </motion.div>
 
@@ -126,10 +126,9 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 1.0, ease: EASE }}
             className="mx-auto mt-8 max-w-2xl text-base font-light leading-relaxed text-white/70 sm:text-lg lg:text-xl"
           >
-            ITS Agency accompagne les entreprises et institutions dans leur
-            expansion globale à travers des architectures numériques
-            sécurisées, du conseil stratégique et la maîtrise des flux du
-            commerce international.
+            ITS Agency combine conseil stratégique et expertise technique pour propulser votre transformation digitale : de 
+            la conception de vos differentes plateformes web et e-commerce à la réalisation de vos audits de cybersécurité, jusqu'au
+             pilotage de vos flux à l'international.
           </motion.p>
 
           {/* Puces d'expertises */}

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { ArrowRight, Shield, Globe, Code2, LineChart } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { ArrowRight, ChevronDown, Shield, Globe, Code2, LineChart } from "lucide-react";
 
 type Differentiator = {
   id: string;
@@ -77,13 +77,37 @@ const itemVariants: Variants = {
   },
 };
 
+const cardFade: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 interface WhyChooseUsProps {
   isStandalone?: boolean;
 }
 
 export default function WhyChooseUs({ isStandalone = false }: WhyChooseUsProps) {
   const [activeTab, setActiveTab] = useState<string>(DIFFERENTIATORS[0].id);
-  const active = DIFFERENTIATORS.find((d) => d.id === activeTab)!;
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (id: string) => {
+    setActiveTab(id);
+    const container = scrollRef.current;
+    if (!container) return;
+    const target = container.querySelector<HTMLElement>(`#${id}`);
+    if (!target) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const offset =
+      targetRect.top - containerRect.top + container.scrollTop - 16;
+
+    container.scrollTo({ top: offset, behavior: "smooth" });
+  };
 
   const scrollToContact = () => {
     const contactSection = document.getElementById("contact");
@@ -93,6 +117,39 @@ export default function WhyChooseUs({ isStandalone = false }: WhyChooseUsProps) 
       window.location.href = "/contact";
     }
   };
+
+  // Scroll-spy : met à jour l'onglet actif automatiquement selon
+  // la section visible dans le panneau, sans attendre un clic.
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const sections = DIFFERENTIATORS.map((d) =>
+      container.querySelector<HTMLElement>(`#${d.id}`)
+    ).filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const mostVisible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (mostVisible) {
+          setActiveTab(mostVisible.target.id);
+        }
+      },
+      {
+        root: container,
+        rootMargin: "-15% 0px -55% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -117,15 +174,15 @@ export default function WhyChooseUs({ isStandalone = false }: WhyChooseUsProps) 
           </p>
         </div>
 
-        {/* Layout : Tabs verticaux à gauche + Contenu à droite */}
+        {/* Layout : Tabs verticaux (ancres) à gauche + panneau à défilement interne à droite */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* Tabs */}
+          {/* Tabs — agissent comme des ancres vers le panneau de droite */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
-            className="flex flex-col gap-2 lg:col-span-4"
+            className="flex flex-col gap-2 lg:col-span-4 lg:self-start lg:sticky lg:top-28"
           >
             {DIFFERENTIATORS.map((diff) => {
               const Icon = diff.icon;
@@ -135,7 +192,7 @@ export default function WhyChooseUs({ isStandalone = false }: WhyChooseUsProps) 
                 <motion.button
                   key={diff.id}
                   variants={itemVariants}
-                  onClick={() => setActiveTab(diff.id)}
+                  onClick={() => scrollToSection(diff.id)}
                   className={`group flex items-start gap-4 rounded-xl border p-5 text-left transition-all duration-300 ${
                     isActive
                       ? "border-[#1F7A4D] bg-[#1F7A4D] text-white shadow-lg"
@@ -166,56 +223,77 @@ export default function WhyChooseUs({ isStandalone = false }: WhyChooseUsProps) 
                 </motion.button>
               );
             })}
+
+            <span className="mt-1 hidden items-center gap-1.5 text-[12px] text-[#4B5A6E] lg:flex">
+              <ChevronDown className="h-3.5 w-3.5" />
+              Cliquez pour aller directement à une section
+            </span>
           </motion.div>
 
-          {/* Contenu actif */}
-          <div className="lg:col-span-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="h-full rounded-2xl border border-[#0B1F3A]/8 bg-white p-8 shadow-[0_2px_20px_rgba(11,31,58,0.06)] lg:p-10"
-              >
-                {/* Image zone */}
-                <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-[#0B1F3A]">
-                  <Image
-                    src={`/images/services/${active.id}.jpg`}
-                    alt={active.title}
-                    fill
-                    className="object-cover opacity-90"
-                    sizes="(max-width: 1024px) 100vw, 66vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/60 to-transparent" />
-                  <div className="absolute bottom-6 left-6">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[12px] font-medium text-white backdrop-blur-sm">
-                      <active.icon className="h-3.5 w-3.5" />
-                      {active.title}
-                    </span>
-                  </div>
-                </div>
+          {/* Panneau à défilement interne — toutes les sections empilées */}
+          <div className="relative lg:col-span-8">
+            <div
+              ref={scrollRef}
+              className="scroll-smooth h-[520px] overflow-y-auto pr-2 sm:h-[560px] lg:h-[640px]"
+            >
+              <div className="flex flex-col gap-8 pb-6">
+                {DIFFERENTIATORS.map((diff) => (
+                  <motion.div
+                    key={diff.id}
+                    id={diff.id}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={cardFade}
+                    className="scroll-mt-4 rounded-2xl border border-[#0B1F3A]/8 bg-white p-8 shadow-[0_2px_20px_rgba(11,31,58,0.06)] lg:p-10"
+                  >
+                    {/* Image zone */}
+                    <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-[#0B1F3A]">
+                      <Image
+                        src={`/images/services/${diff.id}.jpg`}
+                        alt={diff.title}
+                        fill
+                        className="object-cover opacity-90"
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/60 to-transparent" />
+                      <div className="absolute bottom-6 left-6">
+                        <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-[12px] font-medium text-white backdrop-blur-sm">
+                          <diff.icon className="h-3.5 w-3.5" />
+                          {diff.title}
+                        </span>
+                      </div>
+                    </div>
 
-                {/* Texte */}
-                <h3 className="mb-3 text-[22px] font-bold text-[#0B1F3A]">
-                  {active.headline}
-                </h3>
-                <p className="mb-6 text-[14.5px] leading-relaxed text-[#4B5A6E]">
-                  {active.explanation}
-                </p>
+                    {/* Texte */}
+                    <h3 className="mb-3 text-[22px] font-bold text-[#0B1F3A]">
+                      {diff.headline}
+                    </h3>
+                    <p className="mb-6 text-[14.5px] leading-relaxed text-[#4B5A6E]">
+                      {diff.explanation}
+                    </p>
 
-                {/* Contrast box */}
-                <div className="rounded-xl border-l-4 border-[#1F7A4D] bg-[#1F7A4D]/5 p-5">
-                  <p className="text-[13px] leading-relaxed text-[#0B1F3A]/80">
-                    <span className="font-semibold text-[#1F7A4D]">
-                      Ce qui nous différencie :{" "}
-                    </span>
-                    {active.contrast}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                    {/* Contrast box */}
+                    <div className="rounded-xl border-l-4 border-[#1F7A4D] bg-[#1F7A4D]/5 p-5">
+                      <p className="text-[13px] leading-relaxed text-[#0B1F3A]/80">
+                        <span className="font-semibold text-[#1F7A4D]">
+                          Ce qui nous différencie :{" "}
+                        </span>
+                        {diff.contrast}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Voile en bas + indice de scroll, signal qu'il y a plus de contenu */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-16 items-end justify-center bg-gradient-to-t from-[#FBFAF6] to-transparent pb-1">
+              <span className="flex items-center gap-1.5 text-[11px] font-medium text-[#0B1F3A]/50">
+                <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
+                Faites défiler pour tout voir
+              </span>
+            </div>
           </div>
         </div>
 
