@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import { ShieldCheck, Rocket, Layers } from "lucide-react";
+import { ShieldCheck, Rocket, Layers, Target, Compass } from "lucide-react";
 import PageHeader from "@/components/common/PageHeader";
 
 const VALUES = [
@@ -62,9 +62,14 @@ export default function AboutPage() {
             variants={fadeUp}
             className="rounded-xl border border-[#0B1F3A]/8 bg-white p-9 shadow-[0_2px_10px_rgba(11,31,58,0.04)]"
           >
-            <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.2em] text-[#1F7A4D]">
-              🎯 Mission
-            </span>
+            <div className="mb-4 flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1F7A4D]">
+                <Target className="h-4.5 w-4.5 text-white" />
+              </span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#1F7A4D]">
+                Mission
+              </span>
+            </div>
             <blockquote className="text-[18px] font-medium leading-relaxed text-[#0B1F3A]">
               « Accompagner les PME locales dans leur transition vers le
               commerce électronique international en leur fournissant des
@@ -77,9 +82,14 @@ export default function AboutPage() {
             variants={fadeUp}
             className="rounded-xl border border-[#0B1F3A]/8 bg-white p-9 shadow-[0_2px_10px_rgba(11,31,58,0.04)]"
           >
-            <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.2em] text-[#1F7A4D]">
-              🔮 Vision
-            </span>
+            <div className="mb-4 flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1F7A4D]">
+                <Compass className="h-4.5 w-4.5 text-white" />
+              </span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#1F7A4D]">
+                Vision
+              </span>
+            </div>
             <blockquote className="text-[18px] font-medium leading-relaxed text-[#0B1F3A]">
               « Devenir le cabinet de référence en Afrique de l&apos;Ouest
               pour la numérisation sécurisée et l&apos;expansion
