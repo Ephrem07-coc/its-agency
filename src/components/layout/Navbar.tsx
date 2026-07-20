@@ -25,7 +25,7 @@ function Logo() {
     <Link href="/" className="flex shrink-0 items-center">
       <div className="relative h-12 w-52 sm:h-22 sm:w-68">
         <Image
-          src="/images/logo/logo3.png"
+          src="/images/logo/logo5.png"
           alt="ITS Agency"
           fill
           className="object-contain object-left"

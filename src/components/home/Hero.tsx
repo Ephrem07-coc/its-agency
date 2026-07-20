@@ -64,7 +64,7 @@ export default function Hero() {
               className="relative h-full w-full"
             >
               <Image
-                src="/images/logo/logo1.jpeg"
+                src="/images/logo/logo4.jpeg"
                 alt="ITS Agency"
                 fill
                 className="rounded-xl object-contain"
